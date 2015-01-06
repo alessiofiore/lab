@@ -11,10 +11,6 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
-	public function actionSay($message = ’Hello’)
-    {
-        return $this->render('say', ['message' => $message]);		
-	}
 	
 	public function  gii() 
 	{
@@ -33,13 +29,18 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['login', 'index', 'logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['login'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                	[
+                        'actions' => ['index', 'logout'],
                         'allow' => true,
                         'roles' => ['@'],
-                    ],
+                    ]
                 ],
             ],
             'verbs' => [
@@ -104,10 +105,5 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
-    }
-
-    public function actionAbout()
-    {
-        return $this->render('about');
     }
 }

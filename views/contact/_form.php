@@ -8,9 +8,8 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="contact-form">
-
-    <?php $form = ActiveForm::begin(); ?>
+<div class="col-lg-5">
+            <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
     <?= $form->field($model, 'firstname')->textInput(['maxlength' => 50]) ?>
 

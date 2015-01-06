@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use app\models\Contact;
 use app\models\ContactSearch;
 use yii\web\Controller;
@@ -17,7 +18,18 @@ class ContactController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'view', 'create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ]
+                ],
+            ],
+        	'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
