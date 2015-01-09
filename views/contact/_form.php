@@ -8,8 +8,8 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
+<?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
+<div class="col-lg-5">         
 
     <?= $form->field($model, 'firstname')->textInput(['maxlength' => 50]) ?>
 
@@ -31,9 +31,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'fax')->textInput(['maxlength' => 20]) ?>
 
-    <?= $form->field($model, 'email_personal')->textInput(['maxlength' => 50]) ?>
+    <?= $form->field($model, 'email_personal')->input('email') ?>
 
-    <?= $form->field($model, 'email_work')->textInput(['maxlength' => 50]) ?>
+    <?= $form->field($model, 'email_work')->input('email') ?>
 
     <?= $form->field($model, 'address_home')->textInput(['maxlength' => 80]) ?>
 
@@ -45,6 +45,21 @@ use yii\widgets\ActiveForm;
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
-
 </div>
+
+<div class="col-lg-4">
+  	<label class="control-label">Tags:</label><br />
+	<input type="tag" id="tagForm" size="10" class="form-control"><input type="button" id="tagButton" value="Add">
+	<div id="taglist"></div>
+</div>
+
+<?php ActiveForm::end(); ?>
+
+<script type="text/javascript">
+
+	jQuery('#tagButton').click(function() {
+		  alert( "Handler for .click() called." );
+		});
+</script>
+
+

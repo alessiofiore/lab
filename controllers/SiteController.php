@@ -12,18 +12,6 @@ use app\models\ContactForm;
 class SiteController extends Controller
 {
 	
-	public function  gii() 
-	{
-		return [
-				’bootstrap’ => [’gii’],
-				’modules’ => [
-						’gii’ => ’yii\gii\Module’,
-						// ...
-						],
-						// ...
-		];
-	}
-	
     public function behaviors()
     {
         return [
@@ -67,7 +55,8 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+    	$this->redirect(\Yii::$app->urlManager->createUrl("contact/index"));
+//         return $this->render('index');
     }
 
     public function actionLogin()
