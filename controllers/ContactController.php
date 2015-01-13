@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use app\models\Contact;
+use app\models\ContactForm;
 use app\models\ContactSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -66,14 +67,14 @@ class ContactController extends Controller
     }
 
     /**
-     * Creates a new Contact model.
+     * Creates a new ContactForm model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Contact();
-
+        $model = new ContactForm();
+		$model->isNewRecord = true;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

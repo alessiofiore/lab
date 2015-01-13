@@ -48,18 +48,37 @@ use yii\widgets\ActiveForm;
 </div>
 
 <div class="col-lg-4">
-  	<label class="control-label">Tags:</label><br />
-	<input type="tag" id="tagForm" size="10" class="form-control"><input type="button" id="tagButton" value="Add">
+	<label class="control-label">Tags:</label><br /> 
+	<input type="text" id="tagText" size="20" maxlength="20" class="form-control">
+	<input type="button" id="tagButton" value="Add">
 	<div id="taglist"></div>
 </div>
 
 <?php ActiveForm::end(); ?>
 
-<script type="text/javascript">
-
-	jQuery('#tagButton').click(function() {
-		  alert( "Handler for .click() called." );
+<?php $this->registerJs(
+    "
+		$('document').ready(function(){ 
+			tagId=0;		
 		});
-</script>
+		
+		// add tag
+		$('#tagButton').click(function() {
+			
+				idString = 'newTagId-' + tagId;
+			  	$('#taglist').append('<span class=tag id=' + idString + '><a class=delTag id=' + idString + '>[X]</a> ' + $('#tagText').val() + '</span>');
+				$('#tagText').val('');		
+				tagId = tagId + 1;
+			
+		});
+		
+		// delete tag
+		$('#taglist').on('click', 'a', function (event) {
+			var id = '#' + $(this).attr('id');
+			$(id).hide();
+		});
+		
+		"
+);?>
 
 
