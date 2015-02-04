@@ -51,7 +51,10 @@ use yii\widgets\ActiveForm;
 	<label class="control-label">Tags:</label><br /> 
 	<input type="text" id="tagText" size="20" maxlength="20" class="form-control">
 	<input type="button" id="tagButton" value="Add">
-	<div id="taglist"></div>
+	<div id="taglist"></div>	
+	
+	<?= $form->field($model, 'tags')->hiddenInput()->label(''); ?>
+	
 </div>
 
 <?php ActiveForm::end(); ?>
@@ -65,11 +68,16 @@ use yii\widgets\ActiveForm;
 		// add tag
 		$('#tagButton').click(function() {
 			
+			if($('#tagText').val() != '') {
 				idString = 'newTagId-' + tagId;
-			  	$('#taglist').append('<span class=tag id=' + idString + '><a class=delTag id=' + idString + '>[X]</a> ' + $('#tagText').val() + '</span>');
-				$('#tagText').val('');		
-				tagId = tagId + 1;
+			  	$('#taglist').append('<span class=tag id=' + idString + '><a class=delTag id=' + idString + '>[X]</a> ' + $('#tagText').val() + '</span>');					
+				
+				// add tag to input form
+				$('#contactform-tags').val($('#contactform-tags').val() + $('#tagText').val() + ';');
 			
+				tagId = tagId + 1;
+				$('#tagText').val('');	
+			}		
 		});
 		
 		// delete tag

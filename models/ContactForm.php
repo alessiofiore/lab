@@ -23,9 +23,7 @@ use yii\base\Model;
  * @property string $address_home
  * @property string $address_work
  * @property string $notes
- *
- * @property Tagged[] $taggeds
- * @property Tag[] $idTags
+ * @property string $tags
  */
 class ContactForm extends Model
 {
@@ -60,7 +58,8 @@ class ContactForm extends Model
             [['title'], 'string', 'max' => 25],
             [['position'], 'string', 'max' => 30],
             [['phone_home', 'phone_work', 'mobile', 'mobile2', 'fax'], 'string', 'max' => 20],
-            [['address_home', 'address_work'], 'string', 'max' => 80]
+            [['address_home', 'address_work'], 'string', 'max' => 80],
+            [['tags'], 'string']
         ];
     }
 
@@ -85,7 +84,7 @@ class ContactForm extends Model
             'email_work' => Yii::t('app', 'Email Work'),
             'address_home' => Yii::t('app', 'Address Home'),
             'address_work' => Yii::t('app', 'Address Work'),
-            'notes' => Yii::t('app', 'Notes'),
+            'notes' => Yii::t('app', 'Notes')
         ];
     }
 }

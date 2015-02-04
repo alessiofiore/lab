@@ -10,6 +10,9 @@ use app\models\ContactSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\common\ModelAdapter;
+use app\models\Tag;
+use app\models\Tagged;
 
 /**
  * ContactController implements the CRUD actions for Contact model.
@@ -61,8 +64,10 @@ class ContactController extends Controller
      */
     public function actionView($id)
     {
+    	$contact = $this->findModel($id);    	
+    	$contactForm = ModelAdapter::getContactFormFromModel($contact);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $contactForm,
         ]);
     }
 
@@ -73,13 +78,29 @@ class ContactController extends Controller
      */
     public function actionCreate()
     {
-        $model = new ContactForm();
-		$model->isNewRecord = true;
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $contactForm = new ContactForm();
+		$contactForm->isNewRecord = true;	
+        if ($contactForm->load(Yii::$app->request->post())) {
+        	
+        	$modelContact = ModelAdapter::getModelFromContactForm($contactForm);
+        	
+        	if($modelContact->save()) {
+        		
+        		if($contactForm->tags != '') {
+		        	$tags = explode(';', $contactForm->tags);
+		        	foreach($tags as &$value) {
+		        		$tag = new Tag();
+		        		$tag->name = $value;
+		        		$tag->id_contact = $modelContact->id;
+		        		$tag->save();
+		        	}
+        		}
+        	}        	
+        	
+            return $this->redirect(['view', 'id' => $modelContact->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'model' => $contactForm,
             ]);
         }
     }

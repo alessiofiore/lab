@@ -5,13 +5,13 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "Tag".
+ * This is the model class for table "tag".
  *
  * @property integer $id
  * @property string $name
+ * @property integer $id_contact
  *
- * @property Tagged[] $taggeds
- * @property Contact[] $idContacts
+ * @property Contact $idContact
  */
 class Tag extends \yii\db\ActiveRecord
 {
@@ -20,7 +20,7 @@ class Tag extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'Tag';
+        return 'tag';
     }
 
     /**
@@ -29,8 +29,8 @@ class Tag extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name'], 'required'],
-            [['id'], 'integer'],
+            [['name', 'id_contact'], 'required'],
+            [['id_contact'], 'integer'],
             [['name'], 'string', 'max' => 50]
         ];
     }
@@ -41,24 +41,17 @@ class Tag extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
+            'id' => Yii::t('app', 'ID'),
+            'name' => Yii::t('app', 'Name'),
+            'id_contact' => Yii::t('app', 'Id Contact'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTaggeds()
+    public function getIdContact()
     {
-        return $this->hasMany(Tagged::className(), ['id_tag' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdContacts()
-    {
-        return $this->hasMany(Contact::className(), ['id' => 'id_contact'])->viaTable('Tagged', ['id_tag' => 'id']);
+        return $this->hasOne(Contact::className(), ['id' => 'id_contact']);
     }
 }

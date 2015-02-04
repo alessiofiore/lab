@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "Contact".
+ * This is the model class for table "contact".
  *
  * @property integer $id
  * @property string $firstname
@@ -24,8 +24,7 @@ use Yii;
  * @property string $address_work
  * @property string $notes
  *
- * @property Tagged[] $taggeds
- * @property Tag[] $idTags
+ * @property Tag[] $tags
  */
 class Contact extends \yii\db\ActiveRecord
 {
@@ -34,7 +33,7 @@ class Contact extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'Contact';
+        return 'contact';
     }
 
     /**
@@ -81,16 +80,8 @@ class Contact extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTaggeds()
+    public function getTags()
     {
-        return $this->hasMany(Tagged::className(), ['id_contact' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdTags()
-    {
-        return $this->hasMany(Tag::className(), ['id' => 'id_tag'])->viaTable('Tagged', ['id_contact' => 'id']);
+        return $this->hasMany(Tag::className(), ['id_contact' => 'id']);
     }
 }
